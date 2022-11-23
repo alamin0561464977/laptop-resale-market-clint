@@ -1,0 +1,17 @@
+[
+    {
+        "category_id": "01_hp",
+        "companyName": "Hewlett Packard (HP)",
+        "image": "https://i.pinimg.com/736x/fe/0f/fc/fe0ffc4318ac4042d26eb22f0ff079cf--toner-cartridge-coupon-codes.jpg"
+    },
+    {
+        "category_id": "02_dell",
+        "companyName": "Digital Electronic Link Library (DELL)",
+        "image": "https://simg.nicepng.com/png/small/4-41673_dell-logo-photo-dell-logo-png.png"
+    },
+    {
+        "category_id": "03_apple",
+        "companyName": "Apple",
+        "image": "https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2021/10/Black-Apple-logo-on-dark-gray-background.jpg"
+    }
+]
