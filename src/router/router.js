@@ -1,4 +1,5 @@
 import Home from "../pages/Home/Home/Home";
+import Products from "../pages/Products/Products/Products";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../Layout/Main");
@@ -12,6 +13,10 @@ export const router = createBrowserRouter([
             {
                 path: '/',
                 element: <Home></Home>
+            },
+            {
+                path: '/products/:id',
+                element: <Products></Products>
             },
             {
                 path: '/login',

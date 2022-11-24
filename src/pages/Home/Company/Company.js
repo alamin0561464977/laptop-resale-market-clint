@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Company = () => {
     const [company, setCompany] = useState([]);
@@ -13,7 +14,7 @@ const Company = () => {
             <div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                 {
                     company.map(c =>
-                        <a key={c.category_id} href="/" aria-label="View Item">
+                        <Link to={`/products/:${c.category_id}`} key={c.category_id} href="/" aria-label="View Item">
                             <div className="relative overflow-hidden transition duration-200 transform rounded shadow-lg hover:-translate-y-2 hover:shadow-2xl">
                                 <img
                                     className="object-cover w-full h-56 md:h-64 xl:h-80"
@@ -26,7 +27,7 @@ const Company = () => {
                                     </p>
                                 </div>
                             </div>
-                        </a>
+                        </Link>
                     )
                 }
             </div>
