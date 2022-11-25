@@ -9,7 +9,7 @@ const Products = () => {
             <div className='grid grid-cols-1 md:grid-cols-3 my-8 lg:grid-cols-3 gap-8'>
                 {
                     products.map(product =>
-                        <div className="card w-full bg-base-100 shadow-xl">
+                        <div key={product._id} className="card w-full bg-base-100 shadow-xl">
                             <figure><img className='w-full h-60' src={product.image} alt="Shoes" /></figure>
                             <div className="card-body">
                                 <small>Upload: {product.date}</small>

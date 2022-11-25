@@ -1,16 +1,47 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../ContextAPI/UserContext';
 
 const Login = () => {
+    const [error, setError] = useState(null);
+    const { login, googleSingIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const from = location.state?.from?.pathname || '/';
+    console.log(from)
+
+
     const handelLogin = e => {
+        setError(null);
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        login(email, password)
+            .then(({ user }) => {
+                navigate(from, { replace: true })
+                console.log(user)
+            })
+            .catch(err => {
+                setError(err.message);
+                console.log(err);
+            })
         form.reset();
+    };
+    const handelGoogleSingIn = () => {
+        googleSingIn()
+            .then(({ user }) => {
+                navigate('/')
+                console.log(user);
+            })
+            .catch(err => {
+                setError(err.message);
+                console.error(err.message);
+            })
+    };
 
-    }
     return (
         <div className="hero mt-0 pt-0 min-h-screen bg-base-200">
             <div className="hero-content  mt-0  flex-col grid grid-cols-1 lg:grid-cols-2 gap-10 rounded-xl shadow-xl content-center items-center">
@@ -35,13 +66,21 @@ const Login = () => {
                                 </label>
                                 <input name='password' type="password" required placeholder="password" className="input input-bordered" />
                                 <label className="label">
+                                    <p className="label-text-alt font-bold link link-hover text-red-600">{error && error}</p>
+                                </label>
+                                <label className="label">
                                     <Link to='/signUp' className="label-text-alt link link-hover text-primary">SignUp ?</Link>
                                 </label>
                             </div>
-                            <div className="form-control mt-6">
+                            <div className="form-control">
                                 <input type="submit" value="Login" className="btn btn-primary" />
                             </div>
+                            <div className="divider">OR</div>
                         </form>
+                        <button
+                            onClick={handelGoogleSingIn}
+                            className="btn mx-5 font-bold btn-outline"
+                        >Google</button>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@ const Banner = () => {
                 <div className='lg:px-12'>
                     <h1 className="text-5xl text-primary font-bold">Laptop Resale Market</h1>
                     <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    <Link to='/products' className="btn btn-primary">Products</Link>
+                    <Link to='/products/hp' className="btn btn-primary">Products</Link>
                 </div>
             </div>
         </div>

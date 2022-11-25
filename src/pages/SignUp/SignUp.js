@@ -1,19 +1,62 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../ContextAPI/UserContext';
+import { auth } from '../../Firebase/firebase.init';
+import { updateProfile } from 'firebase/auth';
 
 const SignUp = () => {
     const [seller, setSeller] = useState(false);
+    const [error, setError] = useState(null);
+    const { signUp } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     const handelLogin = e => {
+        setError(null);
         setSeller(false)
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
-        const phone = form.phone.value;
+        const photo = form.photo.value;
         const address = form.address.value;
         const email = form.email.value;
         const password = form.password.value;
         const isSeller = seller;
-        console.log(name, phone, address, email, password, isSeller);
+        const buyer = { name, photo, address, email, isSeller };
+        console.log(buyer);
+
+        signUp(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                updateProfile(auth.currentUser, {
+                    displayName: `${name}`
+                })
+
+                    .then(() => {
+                        fetch('http://localhost:5000/buyer', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(buyer)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                            })
+
+                        navigate('/');
+                        console.log(user);
+                    })
+
+                    .catch((err) => {
+                        setError(err.message);
+                        console.error(err.message);
+                    });
+            })
+            .catch((err) => {
+                setError(err.message);
+                console.error(err.message);
+            });
         form.reset();
 
     }
@@ -24,7 +67,7 @@ const SignUp = () => {
                     <img className=' w-[450px] rounded-2xl shadow-xl' src="https://media.tenor.com/p0G_bmA2vSYAAAAd/login.gif" alt="" />
                 </div>
                 <div>
-                    <div className="card flex-shrink-0 py-5 mt-8 w-full shadow-2xl bg-base-100">
+                    <div className="card flex-shrink-0 pt-3 mt-8 w-full shadow-2xl bg-base-100">
                         <div className="text-center lg:text-left">
                             <h1 className="text-4xl text-center font-bold">SingUP</h1>
                         </div>
@@ -37,9 +80,9 @@ const SignUp = () => {
                             </div>
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Phone</span>
+                                    <span className="label-text">Photo URL</span>
                                 </label>
-                                <input name='phone' type="number" required placeholder="phone" className="input input-bordered" />
+                                <input name='photo' type="text" required placeholder="phone" className="input input-bordered" />
                             </div>
                             <div className="form-control">
                                 <label className="label">
@@ -60,15 +103,18 @@ const SignUp = () => {
                                 <input name='password' type="password" required placeholder="password" className="input input-bordered" />
                                 <div className="form-control">
                                     <label onClick={() => setSeller(seller ? false : true)} className="label cursor-pointer">
-                                        <span className="label-text">creates a seller account</span>
+                                        <span className="label-text font-bold text-teal-400">creates a seller account</span>
                                         <input name='seller' type="checkbox" className="checkbox" />
                                     </label>
                                 </div>
                                 <label className="label">
+                                    <p className="label-text-alt font-bold link link-hover text-red-600">{error && error}</p>
+                                </label>
+                                <label className="label">
                                     <Link to='/login' className="label-text-alt link link-hover text-primary">Login ?</Link>
                                 </label>
                             </div>
-                            <div className="form-control mt-6">
+                            <div className="form-control">
                                 <input type="submit" value="SignUp" className="btn btn-primary" />
                             </div>
                         </form>

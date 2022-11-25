@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../ContextAPI/UserContext';
 
 const NavBer = () => {
+    const { user, logOut, isSeller } = useContext(AuthContext);
     const navItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/Blogs'>Blog</Link></li>
-        <li><Link to='/Login'>Login</Link></li>
-        <li tabIndex={0}>
-            <a className="justify-between">
-                Parent
-                <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
-            </a>
-            <ul className="menu menu-compact lg:menu-normal bg-base-100 w-56 p-2 rounded-box">
-                <li><a>Item 1</a></li>
-                <li><a>Item 2</a></li>
-                <li><a>Item 3</a></li>
-            </ul>
-
-        </li>
+        {isSeller && <li><Link to='/seller'>Seller</Link></li>}
+        <li><Link to='/admin'>Admin</Link></li>
+        {
+            user ?
+                <>
+                    <li><button onClick={logOut}>LogOut</button></li>
+                </>
+                :
+                <>
+                    <li><Link to='/Login'>Login</Link></li>
+                </>
+        }
     </>
     return (
         <div className="navbar bg-base-100">
@@ -32,7 +33,7 @@ const NavBer = () => {
                 </div>
                 <a className="btn btn-ghost normal-case font-bold text-primary text-xl">Laptop Resale Market</a>
             </div>
-            <div className="navbar-end hidden lg:flex">
+            <div className=" navbar-end lg:flex">
                 <ul className="menu font-bold menu-horizontal p-0">
                     {navItems}
                 </ul>
