@@ -5,6 +5,7 @@ import Blogs from "../pages/Blogs/Blogs";
 import Home from "../pages/Home/Home/Home";
 import Products from "../pages/Products/Products/Products";
 import AddProduct from "../pages/Seller/AddProduct/AddProduct";
+import MyProducts from "../pages/Seller/MyProducts/MyProducts";
 import Seller from "../pages/Seller/Seller/Seller";
 import SignUp from "../pages/SignUp/SignUp";
 import AdminRouter from "./AdminRouter";
@@ -48,9 +49,13 @@ export const router = createBrowserRouter([
         element: <SellerRouter><Seller></Seller></SellerRouter>,
         children: [
             {
+                path: '/seller',
+                element: <MyProducts></MyProducts>
+            },
+            {
                 path: '/seller/add-product',
                 element: <AddProduct></AddProduct>
-            }
+            },
         ]
     },
     {

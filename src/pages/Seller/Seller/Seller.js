@@ -18,7 +18,7 @@ const Seller = () => {
                     <label htmlFor="seller-drawer" className="drawer-overlay"></label>
                     <ul className="menu p-4 w-80 bg-base-100 text-base-content">
                         {/* <!-- Sidebar content here --> */}
-                        <li><Link to=''>My Products</Link></li>
+                        <li><Link to='/seller'>My Products</Link></li>
                         <li><Link to=''>My Buyers</Link></li>
                         <li><Link to='/seller/add-product'>Add Product</Link></li>
                     </ul>

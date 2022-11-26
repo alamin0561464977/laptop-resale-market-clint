@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import BuyNowModal from './BuyNowModal';
 
 const Products = () => {
+    const [product, setProduct] = useState(null);
     const products = useLoaderData();
+    const handelModal = p => {
+        setProduct(p);
+    }
     return (
         <div>
             <h1 className='text-4xl pl-2 font-bold text-primary mt-10 mb-4 border-l-8 border-sky-500'>Products: {products.length}</h1>
@@ -20,12 +25,18 @@ const Products = () => {
                                 <small className=' font-bold'>Location: {product.location}</small>
                                 <p>{product.description}</p>
                                 <div className="card-actions justify-end">
-                                    <button className="btn btn-primary">Buy Now</button>
+                                    <label
+                                        onClick={() => handelModal(product)}
+                                        htmlFor="buy-now-modal" className="btn btn-primary">Buy Now</label>
                                 </div>
                             </div>
                         </div>)
                 }
             </div>
+            {product && <BuyNowModal
+                product={product}
+                setProduct={setProduct}
+            ></BuyNowModal>}
         </div>
     );
 };

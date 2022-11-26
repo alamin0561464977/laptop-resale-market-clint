@@ -34,13 +34,13 @@ const UserContext = ({ children }) => {
         return () => unS();
     }, []);
 
-    const { data: isSeller, isSellerLoading } = useQuery({
+    const { data: isSeller, isLoading: isSellerLoading } = useQuery({
         queryKey: ['is-seller', user?.email],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/is-seller?email=${user?.email}`);
             const data = await res.json();
             return data;
-        }
+        },
     });
 
     const { data: isAdmin, isLoading } = useQuery({

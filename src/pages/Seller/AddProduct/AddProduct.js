@@ -12,7 +12,7 @@ const AddProduct = () => {
         const userName = form.userName.value;
         const email = form.email.value;
         const image = form.image.value;
-        const productName = form.productName.value;
+        const name = form.productName.value;
         const location = form.location.value;
         const originalPrice = form.originalPrice.value;
         const resalePrice = form.resalePrice.value;
@@ -20,8 +20,9 @@ const AddProduct = () => {
         const used = form.used.value;
         const phone = form.phone.value;
         const companyName = form.companyName.value;
+        const condition = form.condition.value;
         const description = form.description.value;
-        const productInfo = { userName, email, image, productName, location, originalPrice, resalePrice, quantity, used, phone, companyName, description, date, photoURL };
+        const productInfo = { userName, email, image, name, location, originalPrice, resalePrice, quantity, used, phone, companyName, condition, description, date, photoURL };
         console.log(productInfo);
 
         fetch('http://localhost:5000/product', {
@@ -34,6 +35,8 @@ const AddProduct = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                form.reset();
+                alert('added product');
             })
 
 
@@ -103,13 +106,13 @@ const AddProduct = () => {
                         <input name='used' required type="number" placeholder="years of use" className="input input-bordered my-2 w-full" />
                     </div>
                 </div>
+                <div>
+                    <label className="label">
+                        <span className="label-text">Phone</span>
+                    </label>
+                    <input name='phone' required type="number" placeholder="phone" className="input input-bordered my-2 w-full" />
+                </div>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 items-center'>
-                    <div>
-                        <label className="label">
-                            <span className="label-text">Phone</span>
-                        </label>
-                        <input name='phone' required type="number" placeholder="phone" className="input input-bordered my-2 w-full" />
-                    </div>
                     <div>
                         <label className="label">
                             <span className="label-text">Company</span>
@@ -118,6 +121,16 @@ const AddProduct = () => {
                             <option selected>hp</option>
                             <option>dell</option>
                             <option>appel</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="label">
+                            <span className="label-text">Condition type</span>
+                        </label>
+                        <select name='condition' className="select select-bordered w-full">
+                            <option selected>Excellent</option>
+                            <option>Good</option>
+                            <option>fair</option>
                         </select>
                     </div>
                 </div>

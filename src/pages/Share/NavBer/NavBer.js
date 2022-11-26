@@ -31,9 +31,9 @@ const NavBer = () => {
                         {navItems}
                     </ul>
                 </div>
-                <a className="btn btn-ghost normal-case font-bold text-primary text-xl">Laptop Resale Market</a>
+                <Link to='/' className="btn btn-ghost normal-case font-bold text-primary text-xl">Laptop Resale Market</Link>
             </div>
-            <div className=" navbar-end lg:flex">
+            <div className=" navbar-end hidden lg:flex">
                 <ul className="menu font-bold menu-horizontal p-0">
                     {navItems}
                 </ul>

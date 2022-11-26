@@ -4,9 +4,9 @@ import { AuthContext } from '../ContextAPI/UserContext';
 import Loading from '../pages/Share/Loading/Loading';
 
 const SellerRouter = ({ children }) => {
-    const { user, loading, isSeller, isLoading, logOut } = useContext(AuthContext);
+    const { user, loading, isSeller, logOut, isSellerLoading } = useContext(AuthContext);
     const location = useLocation();
-    if (loading || isLoading) {
+    if (loading || isSellerLoading) {
         return <Loading></Loading>
     }
     if (user?.uid && isSeller) {
