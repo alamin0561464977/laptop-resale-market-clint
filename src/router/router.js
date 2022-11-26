@@ -4,8 +4,10 @@ import Buyers from "../pages/Admin/Buyers/Buyers";
 import Blogs from "../pages/Blogs/Blogs";
 import Home from "../pages/Home/Home/Home";
 import Products from "../pages/Products/Products/Products";
+import AddProduct from "../pages/Seller/AddProduct/AddProduct";
 import Seller from "../pages/Seller/Seller/Seller";
 import SignUp from "../pages/SignUp/SignUp";
+import AdminRouter from "./AdminRouter";
 import PrivetRouter from "./PrivetRouter";
 import SellerRouter from "./SellerRouter";
 
@@ -45,12 +47,15 @@ export const router = createBrowserRouter([
         path: '/seller',
         element: <SellerRouter><Seller></Seller></SellerRouter>,
         children: [
-
+            {
+                path: '/seller/add-product',
+                element: <AddProduct></AddProduct>
+            }
         ]
     },
     {
         path: '/admin',
-        element: <Admin></Admin>,
+        element: <AdminRouter><Admin></Admin></AdminRouter>,
         children: [
             {
                 path: '/admin',

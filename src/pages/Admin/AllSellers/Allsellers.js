@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, } from '@tanstack/react-query';
 import Loading from '../../Share/Loading/Loading';
 
@@ -12,7 +12,7 @@ const AllSellers = () => {
         }
     });
     const handelMekAdmin = email => {
-        fetch(`http://localhost:5000/admin?email=${email}`, {
+        fetch(`http://localhost:5000/mek-admin?email=${email}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -55,10 +55,10 @@ const AllSellers = () => {
                                             <td>{seller.name}</td>
                                             <td>{seller.email}</td>
                                             <td><button className="btn btn-xs bg-slate-500">Verify</button></td>
-                                            <td><button
+                                            <td>{!seller?.admin && <button
                                                 onClick={() => handelMekAdmin(seller?.email)}
                                                 className="btn btn-xs bg-green-500"
-                                            >Mek Admin</button></td>
+                                            >Mek Admin</button>}</td>
                                             <td><button className="btn btn-xs bg-red-600">Delete</button></td>
                                         </tr>
                                     )

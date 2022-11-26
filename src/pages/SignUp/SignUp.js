@@ -28,7 +28,8 @@ const SignUp = () => {
             .then((userCredential) => {
                 const user = userCredential.user;
                 updateProfile(auth.currentUser, {
-                    displayName: `${name}`
+                    displayName: `${name}`,
+                    photoURL: `${photo}`
                 })
 
                     .then(() => {

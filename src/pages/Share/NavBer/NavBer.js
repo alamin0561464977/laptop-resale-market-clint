@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../ContextAPI/UserContext';
 
 const NavBer = () => {
-    const { user, logOut, isSeller } = useContext(AuthContext);
+    const { user, logOut, isSeller, isAdmin } = useContext(AuthContext);
     const navItems = <>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='/Blogs'>Blog</Link></li>
         {isSeller && <li><Link to='/seller'>Seller</Link></li>}
-        <li><Link to='/admin'>Admin</Link></li>
+        {isAdmin && <li><Link to='/admin'>Admin</Link></li>}
         {
             user ?
                 <>

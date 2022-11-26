@@ -1,15 +1,9 @@
 import React from 'react';
-import {
-    useQuery,
-    useMutation,
-    useQueryClient,
-    QueryClient,
-    QueryClientProvider,
-} from '@tanstack/react-query';
+import { useQuery, } from '@tanstack/react-query';
 import Loading from '../../Share/Loading/Loading';
 
 const Buyers = () => {
-    const { data: buyers, isLoading } = useQuery({
+    const { data: buyers, isLoading, isAdmin } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/buyers');
@@ -19,7 +13,7 @@ const Buyers = () => {
     });
 
     const handelMekAdmin = email => {
-        fetch(`http://localhost:5000/admin?email=${email}`, {
+        fetch(`http://localhost:5000/mek-admin?email=${email}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -62,10 +56,10 @@ const Buyers = () => {
                                             </td>
                                             <td>{buyer.name}</td>
                                             <td>{buyer.email}</td>
-                                            <td><button
+                                            <td>{!buyer?.admin && <button
                                                 onClick={() => handelMekAdmin(buyer?.email)}
                                                 className="btn btn-xs bg-green-500"
-                                            >Mek Admin</button></td>
+                                            >Mek Admin</button>}</td>
                                             <td><button className="btn btn-xs bg-red-600">Delete</button></td>
                                         </tr>
                                     )

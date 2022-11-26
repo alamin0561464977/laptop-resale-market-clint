@@ -34,10 +34,19 @@ const UserContext = ({ children }) => {
         return () => unS();
     }, []);
 
-    const { data: isSeller, isLoading } = useQuery({
+    const { data: isSeller, isSellerLoading } = useQuery({
         queryKey: ['is-seller', user?.email],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/is-seller?email=${user?.email}`);
+            const data = await res.json();
+            return data;
+        }
+    });
+
+    const { data: isAdmin, isLoading } = useQuery({
+        queryKey: ['is-admin', user?.email],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/is-admin?email=${user?.email}`);
             const data = await res.json();
             return data;
         }
@@ -47,13 +56,14 @@ const UserContext = ({ children }) => {
         user,
         loading,
         isSeller,
+        isSellerLoading,
         isLoading,
+        isAdmin,
         signUp,
         login,
         googleSingIn,
         logOut
     }
-    console.log(user)
     return (
         <AuthContext.Provider value={userInfo}>
             {children}
