@@ -2,16 +2,16 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../ContextAPI/UserContext';
 import Loading from '../../Share/Loading/Loading';
 
-const BuyNowModal = ({ product, setProduct }) => {
+const BuyNowModal = ({ product, setProduct, setProducts, Products, url, refetch }) => {
     const { user } = useContext(AuthContext);
     const { email, displayName, photoURL } = user;
-    const { image, originalPrice, resalePrice, condition } = product;
-    const handelLogin = e => {
+    const { _id, image, originalPrice, resalePrice, condition, name } = product;
+    const handelBooking = e => {
         e.preventDefault();
         const form = e.target;
         const phone = form.phone.value;
         const location = form.location.value;
-        const orderInfo = { email, displayName, image, phone, location, photoURL, originalPrice, resalePrice, condition };
+        const orderInfo = { email, displayName, image, phone, location, photoURL, originalPrice, resalePrice, condition, name };
 
         fetch('http://localhost:5000/order', {
             method: 'POST',
@@ -25,6 +25,21 @@ const BuyNowModal = ({ product, setProduct }) => {
                 console.log(data)
             })
         setProduct(null);
+        fetch(`http://localhost:5000/${url}/${_id}`, {
+            method: "PUT"
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (refetch) {
+                    refetch();
+                }
+                if (data.modifiedCount !== 0 && Products) {
+                    const ps = Products.filter(p => p._id !== _id)
+                    setProducts([...ps]);
+                    console.log(ps);
+                }
+                console.log(data);
+            })
     };
     if (!user || !product) {
         return <Loading></Loading>
@@ -40,7 +55,7 @@ const BuyNowModal = ({ product, setProduct }) => {
                         <div className="text-center lg:text-left">
                             <h1 className="text-4xl text-center font-bold">Add to card</h1>
                         </div>
-                        <form onSubmit={handelLogin} className="card-body">
+                        <form onSubmit={handelBooking} className="card-body">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name</span>
@@ -72,7 +87,7 @@ const BuyNowModal = ({ product, setProduct }) => {
                                 <input name='location' type="text" required placeholder="location" className="input input-bordered" />
                             </div>
                             <div className="form-control">
-                                <input type="submit" value="SignUp" className="btn btn-primary" />
+                                <input type="submit" value="Booking" className="btn btn-primary" />
                             </div>
                         </form>
                     </div>

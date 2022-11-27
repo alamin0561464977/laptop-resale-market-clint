@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useVerifySeller from '../../../hooks/useVerifySeller';
+import { useQuery, } from '@tanstack/react-query';
+
+import Loading from '../../Share/Loading/Loading';
 
 const Company = () => {
-    const [company, setCompany] = useState([]);
-    useEffect(() => {
-        fetch('http://localhost:5000/company')
-            .then(res => res.json())
-            .then(data => setCompany(data))
-    }, []);
+    const { data: company = [], isLoading } = useQuery({
+        queryKey: ['company'],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:5000/company');
+            const data = await res.json();
+            return data;
+        }
+    });
+    console.log(company)
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <div>
             <h1 className='text-3xl pl-2 font-bold text-primary mb-4 border-l-8 border-sky-500'>Company</h1>

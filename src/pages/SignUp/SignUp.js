@@ -12,7 +12,6 @@ const SignUp = () => {
 
     const handelLogin = e => {
         setError(null);
-        setSeller(false)
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
@@ -22,7 +21,7 @@ const SignUp = () => {
         const password = form.password.value;
         const isSeller = seller;
         const buyer = { name, photo, address, email, isSeller };
-        console.log(buyer);
+        console.log(isSeller);
 
         signUp(email, password)
             .then((userCredential) => {
@@ -61,6 +60,8 @@ const SignUp = () => {
         form.reset();
 
     }
+
+
     return (
         <div className="hero pb-10 min-h-screen bg-base-200">
             <div className="hero-content  mt-0  flex-col grid grid-cols-1 lg:grid-cols-2 gap-10 rounded-xl shadow-xl content-center items-center">

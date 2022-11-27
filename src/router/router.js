@@ -1,4 +1,5 @@
 import Admin from "../pages/Admin/Admin/Admin";
+import MyOrders from "../pages/MyOrders/MyOrders";
 import AllSellers from "../pages/Admin/AllSellers/Allsellers";
 import Buyers from "../pages/Admin/Buyers/Buyers";
 import Blogs from "../pages/Blogs/Blogs";
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login></Login>
+            },
+            {
+                path: '/my-orders',
+                element: <PrivetRouter><MyOrders></MyOrders></PrivetRouter>
             },
             {
                 path: '/signUp',

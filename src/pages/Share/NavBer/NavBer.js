@@ -6,6 +6,7 @@ const NavBer = () => {
     const { user, logOut, isSeller, isAdmin } = useContext(AuthContext);
     const navItems = <>
         <li><Link to='/'>Home</Link></li>
+        <li><Link to='/my-orders'>My Orders</Link></li>
         <li><Link to='/Blogs'>Blog</Link></li>
         {isSeller && <li><Link to='/seller'>Seller</Link></li>}
         {isAdmin && <li><Link to='/admin'>Admin</Link></li>}

@@ -4,9 +4,13 @@ import BuyNowModal from './BuyNowModal';
 
 const Products = () => {
     const [product, setProduct] = useState(null);
-    const products = useLoaderData();
+    const Products = useLoaderData();
+    const [products, setProducts] = useState(Products);
+
     const handelModal = p => {
+        console.log(Products)
         setProduct(p);
+
     }
     return (
         <div>
@@ -18,24 +22,46 @@ const Products = () => {
                             <figure><img className='w-full h-60' src={product.image} alt="Shoes" /></figure>
                             <div className="card-body">
                                 <small>Upload: {product.date}</small>
-                                <h2 className="card-title">{product.name}</h2>
-                                <h3 className='text-3xl font-bold textarea-primary'>Price: ${product.price}</h3>
-                                <h5 className=' font-bold m-0 p-0 textarea-primary'>Stock: {product.quantity}</h5>
+                                <h2 className="card-title">{product?.name}</h2>
+                                <h3 className='text-2xl font-bold textarea-primary'>Price: ${product.resalePrice}</h3>
+                                <h5 className=' font-bold m-0 p-0 textarea-primary'>Original Price: {product.originalPrice}</h5>
                                 <h5 className=' font-bold m-0 p-0 textarea-primary'>used: {product.used}</h5>
-                                <small className=' font-bold'>Location: {product.location}</small>
+                                <small className=' font-bold'>Location: {product?.location}</small>
+                                <small className=' font-bold'>Condition: {product?.condition}</small>
                                 <p>{product.description}</p>
-                                <div className="card-actions justify-end">
+                                <label
+                                    onClick={() => handelModal(product)}
+                                    htmlFor="buy-now-modal" className="btn w-full btn-outline btn-primary">Buy Now</label>
+                                <div className="card-actions">
+                                    <div className=' flex'>
+                                        <div className="avatar">
+                                            <div className="w-12 rounded-full">
+                                                <img src={product?.photoURL} alt='' />
+                                            </div>
+                                        </div>
+                                        {console.log(product)}
+                                        <div>
+                                            <h1>{product?.displayName} {product?.verify && <input
+                                                type="checkbox"
+                                                checked="checked" className="checkbox w-3 h-3" />
+                                            }</h1>
+                                            <h1>{product?.email}</h1>
+                                        </div>
+                                    </div>
                                     <label
-                                        onClick={() => handelModal(product)}
-                                        htmlFor="buy-now-modal" className="btn btn-primary">Buy Now</label>
+                                        htmlFor="buy-now-modal" className="btn btn-link">Report to Admin</label>
                                 </div>
                             </div>
-                        </div>)
+                        </div>
+                    )
                 }
             </div>
             {product && <BuyNowModal
                 product={product}
                 setProduct={setProduct}
+                setProducts={setProducts}
+                Products={Products}
+                url='product'
             ></BuyNowModal>}
         </div>
     );

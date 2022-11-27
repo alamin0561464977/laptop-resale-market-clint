@@ -1,9 +1,10 @@
 import React from 'react';
 import { useQuery, } from '@tanstack/react-query';
 import Loading from '../../Share/Loading/Loading';
+import { handelDelete } from '../../../utility/delete';
 
 const Buyers = () => {
-    const { data: buyers, isLoading, isAdmin } = useQuery({
+    const { data: buyers, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/buyers');
@@ -60,7 +61,9 @@ const Buyers = () => {
                                                 onClick={() => handelMekAdmin(buyer?.email)}
                                                 className="btn btn-xs bg-green-500"
                                             >Mek Admin</button>}</td>
-                                            <td><button className="btn btn-xs bg-red-600">Delete</button></td>
+                                            <td><button
+                                                onClick={() => handelDelete(buyer?.email, 'deleteBuyer', refetch)}
+                                                className="btn btn-xs bg-red-600">Delete</button></td>
                                         </tr>
                                     )
                                 }

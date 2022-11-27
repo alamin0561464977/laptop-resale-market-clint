@@ -5,7 +5,7 @@ import { AuthContext } from '../../../ContextAPI/UserContext';
 
 const MyProducts = () => {
     const { user } = useContext(AuthContext);
-    const { data: products, isLoading } = useQuery({
+    const { data: products, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/products-by-email?email=${user?.email}`);
@@ -13,13 +13,35 @@ const MyProducts = () => {
             return data;
         }
     });
+    const handelAdvertise = product => {
+        console.log(product)
+        fetch(`http://localhost:5000/advertise/${product?._id}`, {
+            method: 'PUT'
+        })
+            .then(res => res.json())
+            .then(data => {
+                refetch();
+                console.log(data)
+            })
+    };
+
+    const handelDelete = id => {
+        fetch(`http://localhost:5000/deleteProduct/${id}`, {
+            method: "DELETE"
+        })
+            .then(res => res.json())
+            .then(data => {
+                refetch();
+                console.log(data);
+            })
+    }
 
     if (isLoading) {
         return <Loading></Loading>
     }
     return (
         <div>
-            <h1 className=' mt-5 text-3xl pl-2 font-bold text-primary mb-7 border-l-8 border-sky-500'>My Products</h1>
+            <h1 className=' mt-5 text-3xl pl-2 font-bold text-primary mb-7 border-l-8 border-sky-500'>My Products: {products?.length}</h1>
             <div className="overflow-x-auto">
                 {
                     products?.length ?
@@ -37,8 +59,12 @@ const MyProducts = () => {
                                             <small className=' font-bold'>Location: {product.location}</small>
                                             <p>{product.description}</p>
                                             <div className="card-actions justify-end">
-                                                <button className="btn btn-sm bg-slate-500">Adds</button>
-                                                <button className="btn btn-sm bg-red-500">DELETE</button>
+                                                {!product?.advertise && <button
+                                                    onClick={() => handelAdvertise(product)}
+                                                    className="btn btn-sm bg-slate-500">Adds</button>}
+                                                <button
+                                                    onClick={() => handelDelete(product._id)}
+                                                    className="btn btn-sm bg-red-500">DELETE</button>
                                             </div>
 
                                         </div>

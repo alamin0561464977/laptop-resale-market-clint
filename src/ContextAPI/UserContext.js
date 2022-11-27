@@ -42,7 +42,15 @@ const UserContext = ({ children }) => {
             return data;
         },
     });
-
+    const { data: seller, isLoading: sellerLoading } = useQuery({
+        queryKey: ['seller', user?.email],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/seller?email=${user?.email}`);
+            const data = await res.json();
+            return data;
+        },
+    });
+    console.log(seller?.verify, '0000000')
     const { data: isAdmin, isLoading } = useQuery({
         queryKey: ['is-admin', user?.email],
         queryFn: async () => {
@@ -59,6 +67,8 @@ const UserContext = ({ children }) => {
         isSellerLoading,
         isLoading,
         isAdmin,
+        sellerLoading,
+        seller,
         signUp,
         login,
         googleSingIn,

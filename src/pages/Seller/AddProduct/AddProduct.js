@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../ContextAPI/UserContext';
+import Loading from '../../Share/Loading/Loading';
 
 const AddProduct = () => {
-    const { user } = useContext(AuthContext);
+    const { user, sellerLoading, seller } = useContext(AuthContext);
     const { email, displayName, photoURL } = user;
 
     const handelAddProduct = e => {
         e.preventDefault();
         const date = new Date();
         const form = e.target;
-        const userName = form.userName.value;
         const email = form.email.value;
         const image = form.image.value;
         const name = form.productName.value;
@@ -22,8 +22,11 @@ const AddProduct = () => {
         const companyName = form.companyName.value;
         const condition = form.condition.value;
         const description = form.description.value;
-        const productInfo = { userName, email, image, name, location, originalPrice, resalePrice, quantity, used, phone, companyName, condition, description, date, photoURL };
-        console.log(productInfo);
+        const verify = seller?.verify;
+        const available = true;
+        const productInfo = {
+            displayName, email, image, name, location, originalPrice, resalePrice, quantity, used, phone, companyName, condition, description, date, photoURL, verify, available
+        };
 
         fetch('http://localhost:5000/product', {
             method: 'POST',
@@ -40,6 +43,9 @@ const AddProduct = () => {
             })
 
 
+    }
+    if (sellerLoading) {
+        return <Loading></Loading>
     }
     return (
         <div>

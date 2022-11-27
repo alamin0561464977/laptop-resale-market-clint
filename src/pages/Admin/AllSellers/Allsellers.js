@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery, } from '@tanstack/react-query';
 import Loading from '../../Share/Loading/Loading';
+import { handelDelete } from '../../../utility/delete';
 
 const AllSellers = () => {
-    const { data: sellers, isLoading } = useQuery({
+    const { data: sellers, isLoading, refetch } = useQuery({
         queryKey: ['seller'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/sellers');
@@ -16,7 +17,19 @@ const AllSellers = () => {
             method: 'PUT'
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => {
+                refetch();
+            })
+    };
+    const handelVerify = email => {
+        fetch(`http://localhost:5000/verify?email=${email}`, {
+            method: 'PUT'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                refetch();
+            })
     }
     if (isLoading) {
         return <Loading></Loading>
@@ -54,12 +67,16 @@ const AllSellers = () => {
                                             </td>
                                             <td>{seller.name}</td>
                                             <td>{seller.email}</td>
-                                            <td><button className="btn btn-xs bg-slate-500">Verify</button></td>
+                                            <td>{!seller.verify && <button
+                                                onClick={() => handelVerify(seller?.email)}
+                                                className="btn btn-xs bg-slate-500">Verify</button>}</td>
                                             <td>{!seller?.admin && <button
                                                 onClick={() => handelMekAdmin(seller?.email)}
                                                 className="btn btn-xs bg-green-500"
                                             >Mek Admin</button>}</td>
-                                            <td><button className="btn btn-xs bg-red-600">Delete</button></td>
+                                            <td><button
+                                                onClick={() => handelDelete(seller?.email, 'deleteBuyer', refetch)}
+                                                className="btn btn-xs bg-red-600">Delete</button></td>
                                         </tr>
                                     )
                                 }
