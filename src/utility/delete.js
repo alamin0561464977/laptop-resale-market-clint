@@ -1,6 +1,6 @@
 export const handelDelete = (id, url, refetch) => {
     console.log(id)
-    fetch(`http://localhost:5000/${url}/${id}`, {
+    fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/${url}/${id}`, {
         method: 'DELETE'
     })
         .then(res => res.json())

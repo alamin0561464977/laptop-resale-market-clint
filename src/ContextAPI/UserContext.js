@@ -37,7 +37,11 @@ const UserContext = ({ children }) => {
     const { data: isSeller, isLoading: isSellerLoading } = useQuery({
         queryKey: ['is-seller', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/is-seller?email=${user?.email}`);
+            const res = await fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/is-seller?email=${user?.email}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         },
@@ -45,16 +49,19 @@ const UserContext = ({ children }) => {
     const { data: seller, isLoading: sellerLoading } = useQuery({
         queryKey: ['seller', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/seller?email=${user?.email}`);
+            const res = await fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/seller?email=${user?.email}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         },
     });
-    console.log(seller?.verify, '0000000')
     const { data: isAdmin, isLoading } = useQuery({
         queryKey: ['is-admin', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/is-admin?email=${user?.email}`);
+            const res = await fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/is-admin?email=${user?.email}`);
             const data = await res.json();
             return data;
         }

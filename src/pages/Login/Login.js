@@ -18,11 +18,14 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
         login(email, password)
             .then(({ user }) => {
-                navigate(from, { replace: true })
-                console.log(user)
+                fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/jwt?email=${user?.email}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        localStorage.setItem('userToken', data.accessToken)
+                    })
+                navigate(from, { replace: true });
             })
             .catch(err => {
                 setError(err.message);
@@ -34,7 +37,30 @@ const Login = () => {
         googleSingIn()
             .then(({ user }) => {
                 navigate('/')
-                console.log(user);
+                const buyer = {
+                    name: user?.displayName,
+                    photo: user?.photoURL,
+                    address: null,
+                    email: user?.email,
+                    isSeller: false
+                };
+                fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/buyer', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json',
+                        authorization: `Bearer ${localStorage.getItem('userToken')}`
+                    },
+                    body: JSON.stringify(buyer)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/jwt?email=${user?.email}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                localStorage.setItem('userToken', data.accessToken)
+                            })
+                        navigate('/');
+                    })
             })
             .catch(err => {
                 setError(err.message);

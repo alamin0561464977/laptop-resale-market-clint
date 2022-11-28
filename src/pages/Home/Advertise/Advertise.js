@@ -9,7 +9,7 @@ const Advertise = () => {
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['advertise'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/advertise');
+            const res = await fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/advertise');
             const data = await res.json();
             return data;
         }
@@ -21,6 +21,7 @@ const Advertise = () => {
 
     const handelReportToAdmin = product => {
         reportToAdmin(product);
+
     }
 
 

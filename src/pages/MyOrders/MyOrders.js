@@ -10,7 +10,11 @@ const MyOrders = () => {
     const { data: myOrders, isLoading, refetch } = useQuery({
         queryKey: [''],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/ordersByEmail?email=${user?.email}`);
+            const res = await fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/ordersByEmail?email=${user?.email}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userToken')}`
+                }
+            });
             const data = await res.json();
             return data;
         }

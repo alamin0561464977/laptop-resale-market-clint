@@ -1,7 +1,8 @@
+import { toast } from 'react-toastify';
 export const reportToAdmin = (product) => {
     const { _id, image, name, date, displayName, email } = product;
     const productInto = { id: _id, image, name, date, displayName, email };
-    fetch('http://localhost:5000/reportToAdmin', {
+    fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/reportToAdmin', {
         method: 'POST',
         headers: {
             'content-type': 'application/json'
@@ -10,6 +11,8 @@ export const reportToAdmin = (product) => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
+            if (data.acknowledged) {
+                toast.success('Report to Admin Success')
+            }
         })
 }

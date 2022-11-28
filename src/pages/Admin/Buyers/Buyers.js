@@ -7,18 +7,25 @@ const Buyers = () => {
     const { data: buyers, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/buyers');
+            const res = await fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/buyers', {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userToken')}`
+                }
+            });
             const data = res.json();
             return data;
         }
     });
 
     const handelMekAdmin = email => {
-        fetch(`http://localhost:5000/mek-admin?email=${email}`, {
-            method: 'PUT'
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/mek-admin?email=${email}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('userToken')}`
+            }
         })
             .then(res => res.json())
-            .then(data => console.log(data))
+            .then(data => refetch())
     }
 
 

@@ -13,7 +13,7 @@ const BuyNowModal = ({ product, setProduct, setProducts, Products, url, refetch 
         const location = form.location.value;
         const orderInfo = { email, displayName, image, phone, location, photoURL, originalPrice, resalePrice, condition, name };
 
-        fetch('http://localhost:5000/order', {
+        fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/order', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -25,7 +25,7 @@ const BuyNowModal = ({ product, setProduct, setProducts, Products, url, refetch 
                 console.log(data)
             })
         setProduct(null);
-        fetch(`http://localhost:5000/${url}/${_id}`, {
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/${url}/${_id}`, {
             method: "PUT"
         })
             .then(res => res.json())

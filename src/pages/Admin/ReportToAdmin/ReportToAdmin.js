@@ -6,13 +6,13 @@ const ReportToAdmin = () => {
     const { data: reportedProducts, isLoading, refetch } = useQuery({
         queryKey: [''],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/reportToAdmin');
+            const res = await fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/reportToAdmin');
             const data = await res.json();
             return data;
         }
     });
     const handelDelete = (id, _id) => {
-        fetch(`http://localhost:5000/reportProduct/${id}`, {
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/reportProduct/${id}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -20,8 +20,11 @@ const ReportToAdmin = () => {
                 console.log(data);
 
             })
-        fetch(`http://localhost:5000/deleteReport/${_id}`, {
-            method: "DELETE"
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/deleteReport/${_id}`, {
+            method: "DELETE",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('userToken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {

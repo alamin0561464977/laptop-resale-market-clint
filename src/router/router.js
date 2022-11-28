@@ -33,7 +33,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/products/:companyName',
-                loader: ({ params }) => fetch(`http://localhost:5000/products/${params.companyName}`),
+                loader: ({ params }) => fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/products/${params.companyName}`, {
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('userToken')}`
+                    }
+                }),
                 element: <PrivetRouter><Products></Products></PrivetRouter>
             },
             {

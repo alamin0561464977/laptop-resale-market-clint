@@ -8,7 +8,7 @@ const Company = () => {
     const { data: company = [], isLoading } = useQuery({
         queryKey: ['company'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/company');
+            const res = await fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/company');
             const data = await res.json();
             return data;
         }

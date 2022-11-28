@@ -21,8 +21,7 @@ const SignUp = () => {
         const password = form.password.value;
         const isSeller = seller;
         const buyer = { name, photo, address, email, isSeller };
-        console.log(isSeller);
-
+        console.log(isSeller, 'seller');
         signUp(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
@@ -32,19 +31,24 @@ const SignUp = () => {
                 })
 
                     .then(() => {
-                        fetch('http://localhost:5000/buyer', {
+                        fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/buyer', {
                             method: 'POST',
                             headers: {
-                                'content-type': 'application/json'
+                                'content-type': 'application/json',
+                                authorization: `Bearer ${localStorage.getItem('userToken')}`
                             },
                             body: JSON.stringify(buyer)
                         })
                             .then(res => res.json())
                             .then(data => {
                                 console.log(data);
+                                fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/jwt?email=${user?.email}`)
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        localStorage.setItem('userToken', data.accessToken)
+                                    })
+                                navigate('/');
                             })
-
-                        navigate('/');
                         console.log(user);
                     })
 
@@ -104,9 +108,12 @@ const SignUp = () => {
                                 </label>
                                 <input name='password' type="password" required placeholder="password" className="input input-bordered" />
                                 <div className="form-control">
-                                    <label onClick={() => setSeller(seller ? false : true)} className="label cursor-pointer">
-                                        <span className="label-text font-bold text-teal-400">creates a seller account</span>
-                                        <input name='seller' type="checkbox" className="checkbox" />
+                                    <label className="label cursor-pointer label-text font-bold text-teal-400">
+                                        creates a seller account
+                                        <input className="checkbox" type="checkbox"
+                                            defaultChecked={seller}
+                                            onChange={() => setSeller(!seller)}
+                                        />
                                     </label>
                                 </div>
                                 <label className="label">

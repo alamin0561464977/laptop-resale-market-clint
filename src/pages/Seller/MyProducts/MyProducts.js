@@ -8,15 +8,22 @@ const MyProducts = () => {
     const { data: products, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/products-by-email?email=${user?.email}`);
+            const res = await fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/products-by-email?email=${user?.email}`, {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userToken')}`
+                }
+            });
             const data = res.json();
             return data;
         }
     });
     const handelAdvertise = product => {
         console.log(product)
-        fetch(`http://localhost:5000/advertise/${product?._id}`, {
-            method: 'PUT'
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/advertise/${product?._id}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('userToken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {
@@ -26,8 +33,9 @@ const MyProducts = () => {
     };
 
     const handelDelete = id => {
-        fetch(`http://localhost:5000/deleteProduct/${id}`, {
-            method: "DELETE"
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/deleteProduct/${id}`, {
+            method: "DELETE",
+            authorization: `Bearer ${localStorage.getItem('userToken')}`
         })
             .then(res => res.json())
             .then(data => {

@@ -2,19 +2,25 @@ import React, { useState } from 'react';
 import { useQuery, } from '@tanstack/react-query';
 import Loading from '../../Share/Loading/Loading';
 import { handelDelete } from '../../../utility/delete';
+import { toast } from 'react-toastify';
 
 const AllSellers = () => {
     const { data: sellers, isLoading, refetch } = useQuery({
         queryKey: ['seller'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/sellers');
+            const res = await fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/sellers', {
+                authorization: `Bearer ${localStorage.getItem('userToken')}`
+            });
             const data = res.json();
             return data;
         }
     });
     const handelMekAdmin = email => {
-        fetch(`http://localhost:5000/mek-admin?email=${email}`, {
-            method: 'PUT'
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/mek-admin?email=${email}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('userToken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {
@@ -22,8 +28,11 @@ const AllSellers = () => {
             })
     };
     const handelVerify = email => {
-        fetch(`http://localhost:5000/verify?email=${email}`, {
-            method: 'PUT'
+        fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/verify?email=${email}`, {
+            method: 'PUT',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('userToken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {

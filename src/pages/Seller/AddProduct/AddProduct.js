@@ -28,10 +28,11 @@ const AddProduct = () => {
             displayName, email, image, name, location, originalPrice, resalePrice, quantity, used, phone, companyName, condition, description, date, photoURL, verify, available
         };
 
-        fetch('http://localhost:5000/product', {
+        fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/product', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('userToken')}`
             },
             body: JSON.stringify(productInfo)
         })
