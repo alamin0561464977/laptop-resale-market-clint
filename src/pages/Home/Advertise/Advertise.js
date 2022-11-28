@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
+import { reportToAdmin } from '../../../utility/reportToAdmin';
 import BuyNowModal from '../../Products/Products/BuyNowModal';
 import Loading from '../../Share/Loading/Loading';
 
@@ -16,7 +17,13 @@ const Advertise = () => {
     console.log(product)
     const handelModal = p => {
         setProduct(p);
+    };
+
+    const handelReportToAdmin = product => {
+        reportToAdmin(product);
     }
+
+
     if (isLoading) {
         return <Loading></Loading>
     }
@@ -58,6 +65,7 @@ const Advertise = () => {
                                             </div>
                                         </div>
                                         <label
+                                            onClick={() => handelReportToAdmin(product)}
                                             htmlFor="buy-now-modal" className="btn btn-link">Report to Admin</label>
                                     </div>
                                 </div>

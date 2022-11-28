@@ -12,6 +12,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import AdminRouter from "./AdminRouter";
 import PrivetRouter from "./PrivetRouter";
 import SellerRouter from "./SellerRouter";
+import ReportToAdmin from "../pages/Admin/ReportToAdmin/ReportToAdmin";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../Layout/Main");
@@ -74,6 +75,10 @@ export const router = createBrowserRouter([
             {
                 path: '/admin/all-seller',
                 element: <AllSellers></AllSellers>
+            },
+            {
+                path: '/admin/reported-products',
+                element: <ReportToAdmin></ReportToAdmin>
             },
         ]
     },

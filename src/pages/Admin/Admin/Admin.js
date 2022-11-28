@@ -20,7 +20,7 @@ const Admin = () => {
                         {/* <!-- Sidebar content here --> */}
                         <li><Link to='/admin'>All Buyers</Link></li>
                         <li><Link to='/admin/all-seller'>All Sellers</Link></li>
-                        <li><Link to='/admin'></Link></li>
+                        <li><Link to='/admin/reported-products'>Reported Products</Link></li>
                         <li><Link to='/admin'></Link></li>
                     </ul>
 

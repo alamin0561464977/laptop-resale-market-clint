@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { reportToAdmin } from '../../../utility/reportToAdmin';
 import BuyNowModal from './BuyNowModal';
 
 const Products = () => {
     const [product, setProduct] = useState(null);
     const Products = useLoaderData();
     const [products, setProducts] = useState(Products);
-
     const handelModal = p => {
-        console.log(Products)
         setProduct(p);
 
+    };
+    const handelReportToAdmin = product => {
+        reportToAdmin(product);
+
     }
+
     return (
         <div>
             <h1 className='text-4xl pl-2 font-bold text-primary mt-10 mb-4 border-l-8 border-sky-500'>Products: {products.length}</h1>
@@ -49,6 +53,7 @@ const Products = () => {
                                         </div>
                                     </div>
                                     <label
+                                        onClick={() => handelReportToAdmin(product)}
                                         htmlFor="buy-now-modal" className="btn btn-link">Report to Admin</label>
                                 </div>
                             </div>
