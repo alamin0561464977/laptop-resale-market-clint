@@ -2,8 +2,11 @@ import React from 'react';
 import { useQuery, } from '@tanstack/react-query';
 import Loading from '../../Share/Loading/Loading';
 import { handelDelete } from '../../../utility/delete';
+import { useContext } from 'react';
+import { AuthContext } from '../../../ContextAPI/UserContext';
 
 const Buyers = () => {
+    const { logOut } = useContext(AuthContext);
     const { data: buyers, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
@@ -31,7 +34,11 @@ const Buyers = () => {
 
     if (isLoading) {
         return <Loading></Loading>
-    }
+    };
+    if (buyers?.message === 'forbidden access') {
+        logOut();
+        return
+    };
     return (
         <div>
             <h1 className=' mt-5 text-3xl pl-2 font-bold text-primary mb-7 border-l-8 border-sky-500'>All Buyers</h1>

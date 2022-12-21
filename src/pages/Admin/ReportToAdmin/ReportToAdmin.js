@@ -17,7 +17,6 @@ const ReportToAdmin = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
 
             })
         fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/deleteReport/${_id}`, {
@@ -28,7 +27,6 @@ const ReportToAdmin = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 refetch();
             })
     }

@@ -6,8 +6,8 @@ import { handelDelete } from '../../utility/delete';
 import { Link } from 'react-router-dom';
 
 const MyOrders = () => {
-    const { user } = useContext(AuthContext);
-    const { data: myOrders, isLoading, refetch } = useQuery({
+    const { user, logOut } = useContext(AuthContext);
+    const { data: myOrders = [], isLoading, refetch } = useQuery({
         queryKey: [''],
         queryFn: async () => {
             const res = await fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/ordersByEmail?email=${user?.email}`, {
@@ -22,12 +22,15 @@ const MyOrders = () => {
     if (isLoading) {
         return <Loading></Loading>
     };
+    if (myOrders.message === 'forbidden access') {
+        // logOut();
+    }
     return (
         <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
             <p className=' text-center p-2 mt-5 text-3xl font-bold text-primary mb-7'>My Orders</p>
             <div className="grid gap-10 mx-auto lg:grid-cols-2 lg:max-w-screen-lg">
-                {!myOrders.length && <Link className=' text-primary font-bold' to='/products/hp'>Order Product</Link>}
-                {
+                {!myOrders.length && <Link className=' text-primary mx-auto font-bold' to='/products/hp'>Order Product</Link>}
+                {myOrders.length &&
                     myOrders.map(myOrder =>
                         <div className="grid shadow-xl sm:grid-cols-3">
                             <div className="relative w-full h-48 max-h-full rounded shadow sm:h-auto">

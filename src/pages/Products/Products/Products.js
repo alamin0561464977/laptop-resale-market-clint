@@ -43,7 +43,6 @@ const Products = () => {
                                                 <img src={product?.photoURL} alt='' />
                                             </div>
                                         </div>
-                                        {console.log(product)}
                                         <div>
                                             <h1>{product?.displayName} {product?.verify && <input
                                                 type="checkbox"

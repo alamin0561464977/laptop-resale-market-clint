@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useQuery, } from '@tanstack/react-query';
 import Loading from '../../Share/Loading/Loading';
 import { handelDelete } from '../../../utility/delete';
-import { toast } from 'react-toastify';
+import { AuthContext } from '../../../ContextAPI/UserContext';
 
 const AllSellers = () => {
+    const { logOut } = useContext(AuthContext);
     const { data: sellers, isLoading, refetch } = useQuery({
         queryKey: ['seller'],
         queryFn: async () => {
-            const res = await fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/sellers', {
-                authorization: `Bearer ${localStorage.getItem('userToken')}`
+            const res = await fetch('http://localhost:5000/sellers', {
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('userToken')}`
+                }
             });
             const data = res.json();
             return data;
@@ -36,19 +39,22 @@ const AllSellers = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 refetch();
             })
-    }
+    };
     if (isLoading) {
         return <Loading></Loading>
+    };
+    if (sellers?.message === 'forbidden access') {
+        logOut();
+        return
     }
     return (
         <div>
             <h1 className=' mt-5 text-3xl pl-2 font-bold text-primary mb-7 border-l-8 border-sky-500'>All Sellers</h1>
             <div className="overflow-x-auto">
                 {
-                    sellers.length ?
+                    sellers?.length ?
                         <table className="table w-full">
                             <thead>
                                 <tr>

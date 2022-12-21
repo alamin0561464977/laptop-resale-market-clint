@@ -21,7 +21,6 @@ const SignUp = () => {
         const password = form.password.value;
         const isSeller = seller;
         const buyer = { name, photo, address, email, isSeller };
-        console.log(isSeller, 'seller');
         signUp(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
@@ -31,17 +30,15 @@ const SignUp = () => {
                 })
 
                     .then(() => {
-                        fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/buyer', {
+                        fetch('http://localhost:5000/buyer', {
                             method: 'POST',
                             headers: {
-                                'content-type': 'application/json',
-                                authorization: `Bearer ${localStorage.getItem('userToken')}`
+                                'content-type': 'application/json'
                             },
                             body: JSON.stringify(buyer)
                         })
                             .then(res => res.json())
                             .then(data => {
-                                console.log(data);
                                 fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/jwt?email=${user?.email}`)
                                     .then(res => res.json())
                                     .then(data => {
@@ -49,7 +46,6 @@ const SignUp = () => {
                                     })
                                 navigate('/');
                             })
-                        console.log(user);
                     })
 
                     .catch((err) => {

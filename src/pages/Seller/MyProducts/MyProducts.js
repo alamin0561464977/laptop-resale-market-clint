@@ -4,7 +4,7 @@ import Loading from '../../Share/Loading/Loading';
 import { AuthContext } from '../../../ContextAPI/UserContext';
 
 const MyProducts = () => {
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
     const { data: products, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
@@ -18,7 +18,6 @@ const MyProducts = () => {
         }
     });
     const handelAdvertise = product => {
-        console.log(product)
         fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/advertise/${product?._id}`, {
             method: 'PUT',
             headers: {
@@ -28,7 +27,6 @@ const MyProducts = () => {
             .then(res => res.json())
             .then(data => {
                 refetch();
-                console.log(data)
             })
     };
 
@@ -40,13 +38,16 @@ const MyProducts = () => {
             .then(res => res.json())
             .then(data => {
                 refetch();
-                console.log(data);
             })
     }
 
     if (isLoading) {
         return <Loading></Loading>
-    }
+    };
+    if (products?.message === 'forbidden access') {
+        logOut();
+        return
+    };
     return (
         <div>
             <h1 className=' mt-5 text-3xl pl-2 font-bold text-primary mb-7 border-l-8 border-sky-500'>My Products: {products?.length}</h1>

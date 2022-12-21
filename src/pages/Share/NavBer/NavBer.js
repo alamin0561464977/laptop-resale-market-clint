@@ -39,6 +39,11 @@ const NavBer = () => {
                     {navItems}
                 </ul>
             </div>
+            {user?.uid && <div className="avatar online">
+                <div className="w-14 rounded-full">
+                    <img src={user?.photoURL} alt='' />
+                </div>
+            </div>}
         </div>
     );
 };

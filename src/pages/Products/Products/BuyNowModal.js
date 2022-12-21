@@ -22,7 +22,6 @@ const BuyNowModal = ({ product, setProduct, setProducts, Products, url, refetch 
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
             })
         setProduct(null);
         fetch(`https://laptop-resale-market-server-alamin0561464977.vercel.app/${url}/${_id}`, {
@@ -36,9 +35,7 @@ const BuyNowModal = ({ product, setProduct, setProducts, Products, url, refetch 
                 if (data.modifiedCount !== 0 && Products) {
                     const ps = Products.filter(p => p._id !== _id)
                     setProducts([...ps]);
-                    console.log(ps);
                 }
-                console.log(data);
             })
     };
     if (!user || !product) {

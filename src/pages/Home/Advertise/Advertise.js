@@ -14,7 +14,6 @@ const Advertise = () => {
             return data;
         }
     });
-    console.log(product)
     const handelModal = p => {
         setProduct(p);
     };
@@ -56,7 +55,6 @@ const Advertise = () => {
                                                     <img src={product?.photoURL} alt='' />
                                                 </div>
                                             </div>
-                                            {console.log(product)}
                                             <div>
                                                 <h1>{product?.displayName} {product?.verify && <input
                                                     type="checkbox"

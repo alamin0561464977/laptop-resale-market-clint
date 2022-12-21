@@ -9,7 +9,6 @@ const Login = () => {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || '/';
-    console.log(from)
 
 
     const handelLogin = e => {
@@ -29,7 +28,6 @@ const Login = () => {
             })
             .catch(err => {
                 setError(err.message);
-                console.log(err);
             })
         form.reset();
     };
@@ -44,11 +42,10 @@ const Login = () => {
                     email: user?.email,
                     isSeller: false
                 };
-                fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/buyer', {
+                fetch('http://localhost:5000/buyer', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json',
-                        authorization: `Bearer ${localStorage.getItem('userToken')}`
                     },
                     body: JSON.stringify(buyer)
                 })

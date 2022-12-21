@@ -13,7 +13,7 @@ const SellerRouter = ({ children }) => {
         return children;
     }
     else {
-        // logOut();
+        logOut();
         return <Navigate to='/login' state={{ from: location }} replace></Navigate>
     }
 };

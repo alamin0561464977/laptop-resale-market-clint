@@ -13,7 +13,6 @@ const Company = () => {
             return data;
         }
     });
-    console.log(company)
     if (isLoading) {
         return <Loading></Loading>
     }

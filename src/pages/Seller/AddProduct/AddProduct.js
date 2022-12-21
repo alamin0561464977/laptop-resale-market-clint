@@ -3,7 +3,7 @@ import { AuthContext } from '../../../ContextAPI/UserContext';
 import Loading from '../../Share/Loading/Loading';
 
 const AddProduct = () => {
-    const { user, sellerLoading, seller } = useContext(AuthContext);
+    const { user, sellerLoading, seller, logOut } = useContext(AuthContext);
     const { email, displayName, photoURL } = user;
 
     const handelAddProduct = e => {
@@ -38,8 +38,11 @@ const AddProduct = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 form.reset();
+                if (data?.message === 'forbidden access') {
+                    logOut();
+                    return
+                };
                 alert('added product');
             })
 
@@ -47,7 +50,8 @@ const AddProduct = () => {
     }
     if (sellerLoading) {
         return <Loading></Loading>
-    }
+    };
+
     return (
         <div>
             <h1 className=' text-3xl pl-2 font-bold text-primary mb-4 border-l-8 border-sky-500'>Add Product</h1>
