@@ -30,7 +30,7 @@ const SignUp = () => {
                 })
 
                     .then(() => {
-                        fetch('http://localhost:5000/buyer', {
+                        fetch('https://laptop-resale-market-server-alamin0561464977.vercel.app/buyer', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'
